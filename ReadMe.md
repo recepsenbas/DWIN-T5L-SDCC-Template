@@ -214,8 +214,6 @@ If this open-source work helps your project, you can support future improvements
 This project is licensed under the **CC BY-NC-SA 4.0** License.  
 See the [LICENSE](./LICENSE) file for details.
 
-> Until a LICENSE file is added, treat this repository as **all rights reserved**. For commercial licensing or support, contact the author.
-
 ---
 
 ## Acknowledgments
