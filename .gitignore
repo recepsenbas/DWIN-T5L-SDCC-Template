@@ -1,0 +1,11 @@
+# build klasörünün tümünü ekle
+build/obj/*
+!build/obj/.gitkeep
+build/dist/*.mem
+build/dist/*.hex
+build/dist/*.ihx
+build/dist/*.map
+build/dist/*.lk
+
+.DS_Store
+lib/.DS_Store

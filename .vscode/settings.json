@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "t5l1.h": "c",
+        "uart.h": "c",
+        "stdint.h": "c",
+        "sys.h": "c",
+        "timer.h": "c",
+        "config.h": "c",
+        "crc16.h": "c",
+        "includes.h": "c",
+        "vp_flags.h": "c",
+        "uart_flags.h": "c",
+        "app_defs.h": "c"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/lib/crc16",
+        "${workspaceFolder}/lib/rtc",
+        "${workspaceFolder}/lib/sys",
+        "${workspaceFolder}/lib/timer",
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/src/app",
+        "${workspaceFolder}/src/app/app_defs"
+    ],
+    
+}
