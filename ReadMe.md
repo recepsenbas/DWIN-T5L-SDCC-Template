@@ -18,6 +18,16 @@ A production‑ready starter for building firmware on DWIN T5L/T5L51 controllers
 
 ---
 
+## 🎥 Video Tutorial
+
+A complete video walkthrough of the setup and build process for this template is available on YouTube:
+
+👉 [Watch on YouTube](https://www.youtube.com/watch?v=ZnZoBKaqA0A)
+
+This video demonstrates SDCC and Make installation on macOS and Windows, project structure overview, and how to compile your code using `make`.
+
+---
+
 ## Features
 - Structured C project with clear separation of **startup**, **libs**, and **app** layers
 - SDCC **large model** configuration with XRAM placed at `0x8000`
