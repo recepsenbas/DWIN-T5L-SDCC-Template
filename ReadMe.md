@@ -71,13 +71,18 @@ brew install sdcc make
 ```
 > The Makefile auto‑detects SDCC include/lib paths. If Homebrew layout changes, it also falls back to a standard path.
 
-### Windows (MSYS2)
+### Windows
+#### Install SDCC
+1. Install **SDCC** → https://sourceforge.net/projects/sdcc/
+
+#### Install MSYS2
 1. Install **MSYS2** → https://www.msys2.org/
 2. Open *MSYS2 MinGW 64‑bit* shell and install:
    ```bash
-   pacman -S --needed mingw-w64-x86_64-sdcc make
+    pacman -S make
    ```
-3. Ensure `sdcc`, `sdas8051`, `make`, `packihx`, `makebin` are in PATH.
+
+3. Ensure `C:\msys64\usr\bin` and `C:\msys64\mingw64\bin` are in PATH.
 
 ### Linux (Debian/Ubuntu)
 ```bash
