@@ -360,13 +360,18 @@ void DGUS_MonitorAndSendUpdates(void)
         static __xdata u8 packet[100] = {0};
 
         // Build packet header
+        // Format (DGUS 0x83 response-like):
+        // [5A A5 | LEN | 0x83 | AddrH | AddrL | Words | Data(2*Words) | (CRC Lo | CRC Hi if CRC ON)]
         packet[0] = 0x5A;
         packet[1] = 0xA5;
-        packet[2] = (((u8)var_length) << 1) + 4; // Length of payload
+        {
+            u8 words = (u8)var_length;                // var_length low-byte = number of words
+            packet[2] = (u8)(2u * words + 4u);        // LEN (without CRC) = 4 + 2*Words
+        }
         packet[3] = 0x83;
-        packet[4] = (u8)change_flag;       // Address (low)
-        packet[5] = (u8)(var_length >> 8); // Length high
-        packet[6] = (u8)var_length;        // Length low
+        packet[4] = (u8)change_flag;       // AddrH (0x0F00 high-byte==0x5A, low-byte carries AddrH)
+        packet[5] = (u8)(var_length >> 8); // AddrL (0x0F01 high-byte)
+        packet[6] = (u8)var_length;        // Words  (0x0F01 low-byte)
 
         last_addr = ((u16)packet[4] << 8) | packet[5];
         /* Check Flags */
@@ -379,18 +384,40 @@ void DGUS_MonitorAndSendUpdates(void)
             packet[8 + 2 * i] = (u8)(temp_val);
         }
 
-// Send packet over enabled UART channels
+#if USE_CRC
+        // If CRC is enabled, LEN must include the CRC(2) and CRC is computed over [payload], i.e. from packet[3] for (LEN-2) bytes
+        packet[2] = (u8)(packet[2] + 2u);
+        {
+            u16 crc = crc16table(packet + 3, (u16)(packet[2] - 2u));
+            packet[3 + (u16)packet[2] - 2u] = (u8)(crc & 0xFF);  // CRC LOW
+            packet[3 + (u16)packet[2] - 1u] = (u8)(crc >> 8);    // CRC HIGH
+        }
+#endif
+
+        // Send packet over enabled UART channels (send exactly LEN+3 bytes; do not append CRC here)
 #if UART2_ENABLE
-        uart_send_arr(2, packet, (u8)(packet[2] + 3));
+        uart_4_5_pin_ctrl(2, 1);
+        for (u16 i = 0; i < (u16)packet[2] + 3u; i++)
+            uart_send_byte(2, packet[i]);
+        uart_4_5_pin_ctrl(2, 0);
 #endif
 #if UART3_ENABLE
-        uart_send_arr(3, packet, (u8)(packet[2] + 3));
+        uart_4_5_pin_ctrl(3, 1);
+        for (u16 i = 0; i < (u16)packet[2] + 3u; i++)
+            uart_send_byte(3, packet[i]);
+        uart_4_5_pin_ctrl(3, 0);
 #endif
 #if UART4_ENABLE
-        uart_send_arr(4, packet, (u8)(packet[2] + 3));
+        uart_4_5_pin_ctrl(4, 1);
+        for (u16 i = 0; i < (u16)packet[2] + 3u; i++)
+            uart_send_byte(4, packet[i]);
+        uart_4_5_pin_ctrl(4, 0);
 #endif
 #if UART5_ENABLE
-        uart_send_arr(5, packet, (u8)(packet[2] + 3));
+        uart_4_5_pin_ctrl(5, 1);
+        for (u16 i = 0; i < (u16)packet[2] + 3u; i++)
+            uart_send_byte(5, packet[i]);
+        uart_4_5_pin_ctrl(5, 0);
 #endif
 
         // Clear DGUS flags

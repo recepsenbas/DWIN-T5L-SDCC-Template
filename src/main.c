@@ -1,6 +1,7 @@
 /* -----------------------------------------------------------------------------
  *  Project : DWIN-T5L-SDCC-Template
  *  File    : main.c
+ *  Version : 0.1.1
  *  Author  : Recep Şenbaş (https://github.com/recepsenbas)
  *  License : CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
  *  Contact : recepsenbas@gmail.com
