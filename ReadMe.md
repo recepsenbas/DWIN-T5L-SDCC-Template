@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Build-Stable-brightgreen?style=for-the-badge" alt="Build Status"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-0.1.1-blue?style=for-the-badge" alt="Version"/>
   <img src="https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-orange?style=for-the-badge" alt="License"/>
   <img src="https://img.shields.io/badge/Platform-macOS%20|%20Linux%20|%20Windows-lightgrey?style=for-the-badge" alt="Platform"/>
   <a href="https://buymeacoffee.com/recepsenbas" target="_blank" rel="noopener">
