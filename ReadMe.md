@@ -60,6 +60,8 @@ This video demonstrates SDCC and Make installation on macOS and Windows, project
 │  └─ main.c               # Entry point
 ├─ startup/
 │  └─ startup_T5L.s        # Reset vector, ISRs, segments
+├─ artifacts/            # Prebuilt binaries for quick flashing
+│  └─ v0.1.1/            # Versioned folder (e.g., 9600/115200, CRC on/off)
 ├─ build/
 │  ├─ obj/                 # Compiled objects (.rel)
 │  └─ dist/                # Final artifacts (.ihx/.hex/.bin/.map)
@@ -157,6 +159,20 @@ DWIN panels accept two common flows:
    *Important wiring note:* on some boards the Wi‑Fi pads are labeled from the MCU’s point of view. That means you should connect **TX→TX** and **RX→RX** on those pads (counter‑intuitive), plus common **GND**. Use **3.3V TTL** levels (not RS‑232). Always confirm your model’s schematic/manual.
 
 This template only produces the **BIN**; choose either method above based on your hardware access.
+
+## Prebuilt Binaries
+Ready‑to‑flash `.bin` files built for common settings. Files are versioned under `artifacts/<version>/`.
+
+**v0.1.1**  
+`artifacts/v0.1.1/`
+- [T5L51_9600_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.1/T5L51_9600_CrcOff_ResponseOff_noRTC.bin)
+- [T5L51_9600_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.1/T5L51_9600_CrcOff_ResponseOn_noRTC.bin)
+- [T5L51_9600_CrcOn_ResponseOn_noRTC.bin](./artifacts/v0.1.1/T5L51_9600_CrcOn_ResponseOn_noRTC.bin)
+- [T5L51_115200_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.1/T5L51_115200_CrcOff_ResponseOff_noRTC.bin)
+- [T5L51_115200_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.1/T5L51_115200_CrcOff_ResponseOn_noRTC.bin)
+- [T5L51_115200_CrcON_ResponseOn_noRTC.bin](./artifacts/v0.1.1/T5L51_115200_CrcON_ResponseOn_noRTC.bin)
+
+> **Tip:** Baud rate and CRC settings must match your mcu side configuration. If you don’t get responses, recheck CRC mode and DGUS "response on/off" settings.
 
 ---
 
