@@ -26,7 +26,7 @@ INCLUDES = 	-Isrc -Isrc/app -Isrc/app/app_defs -Iinclude -Istartup -Ilib/uart -I
 
 # Common flags for SDCC
 CFLAGS  = -mmcs51 --model-large --xram-loc 0x8000 --xram-size 0x8000 $(INCLUDES)
-LDFLAGS = -mmcs51 --model-large --xram-loc 0x8000 --xram-size 0x8000 -L"$(SDCC_MCS51_LIBDIR)"
+LDFLAGS = -mmcs51 --model-large --code-size 65536 --xram-loc 0x8000 --xram-size 0x8000 -L"$(SDCC_MCS51_LIBDIR)"
 
 OBJDIR   = build/obj
 BINDIR   = build/dist
@@ -106,7 +106,8 @@ $(HEX): $(IHX)
 # Bin + Map özeti
 # Bin + Map özeti
 $(BIN): $(HEX)
-	$(MAKEBIN) -p $(HEX) $(BIN)
+	# Match the 64 KiB code address space; -p still trims unused trailing bytes.
+	$(MAKEBIN) -s 65536 -p $(HEX) $(BIN)
 	@MAPFILE="$(MAP)"; \
 	if [ -f "$$MAPFILE" ]; then \
 	  LC_ALL=C awk '\
