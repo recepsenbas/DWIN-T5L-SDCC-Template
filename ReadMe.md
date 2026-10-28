@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Build-Stable-brightgreen?style=for-the-badge" alt="Build Status"/>
-  <img src="https://img.shields.io/badge/Version-0.1.2-blue?style=for-the-badge" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-0.1.3-blue?style=for-the-badge" alt="Version"/>
   <img src="https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-orange?style=for-the-badge" alt="License"/>
   <img src="https://img.shields.io/badge/Platform-macOS%20|%20Linux%20|%20Windows-lightgrey?style=for-the-badge" alt="Platform"/>
   <a href="https://buymeacoffee.com/recepsenbas" target="_blank" rel="noopener">
@@ -61,7 +61,7 @@ This video demonstrates SDCC and Make installation on macOS and Windows, project
 ├─ startup/
 │  └─ startup_T5L.s        # Reset vector, ISRs, segments
 ├─ artifacts/            # Prebuilt binaries for quick flashing
-│  └─ v0.1.1/            # Versioned folder (e.g., 9600/115200, CRC on/off)
+│  └─ v0.1.3/            # Versioned folder (e.g., 9600/115200, CRC on/off)
 ├─ build/
 │  ├─ obj/                 # Compiled objects (.rel)
 │  └─ dist/                # Final artifacts (.ihx/.hex/.bin/.map)
@@ -131,7 +131,7 @@ sdas8051 -plos build/obj/startup_T5L.rel startup/startup_T5L.s
 cd build/dist && sdcc -mmcs51 --model-large --xram-loc 0x8000 --xram-size 0x8000 -Wl-m -o output.ihx ../obj/*.rel
 cd ../..
 packihx build/dist/output.ihx > build/dist/output.hex
-makebin -p build/dist/output.hex build/dist/T5L51.bin
+makebin -s 65536 -p build/dist/output.hex build/dist/T5L51.bin
 ```
 
 ---
@@ -163,14 +163,14 @@ This template only produces the **BIN**; choose either method above based on you
 ## Prebuilt Binaries
 Ready‑to‑flash `.bin` files built for common settings. Files are versioned under `artifacts/<version>/`.
 
-**v0.1.2**  
-`artifacts/v0.1.2/`
-- [T5L51_9600_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.2/T5L51_9600_CrcOff_ResponseOff_noRTC.bin)
-- [T5L51_9600_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.2/T5L51_9600_CrcOff_ResponseOn_noRTC.bin)
-- [T5L51_9600_CrcOn_ResponseOn_noRTC.bin](./artifacts/v0.1.2/T5L51_9600_CrcOn_ResponseOn_noRTC.bin)
-- [T5L51_115200_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.2/T5L51_115200_CrcOff_ResponseOff_noRTC.bin)
-- [T5L51_115200_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.2/T5L51_115200_CrcOff_ResponseOn_noRTC.bin)
-- [T5L51_115200_CrcON_ResponseOn_noRTC.bin](./artifacts/v0.1.2/T5L51_115200_CrcON_ResponseOn_noRTC.bin)
+**v0.1.3**
+`artifacts/v0.1.3/`
+- [T5L51_9600_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.3/T5L51_9600_CrcOff_ResponseOff_noRTC.bin)
+- [T5L51_9600_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.3/T5L51_9600_CrcOff_ResponseOn_noRTC.bin)
+- [T5L51_9600_CrcOn_ResponseOn_noRTC.bin](./artifacts/v0.1.3/T5L51_9600_CrcOn_ResponseOn_noRTC.bin)
+- [T5L51_115200_CrcOff_ResponseOff_noRTC.bin](./artifacts/v0.1.3/T5L51_115200_CrcOff_ResponseOff_noRTC.bin)
+- [T5L51_115200_CrcOff_ResponseOn_noRTC.bin](./artifacts/v0.1.3/T5L51_115200_CrcOff_ResponseOn_noRTC.bin)
+- [T5L51_115200_CrcON_ResponseOn_noRTC.bin](./artifacts/v0.1.3/T5L51_115200_CrcON_ResponseOn_noRTC.bin)
 
 > **⚠️ Important:** After flashing, the panel will immediately operate with those settings and they persist across reboots. Ensure your MCU/host UART is set to the **same baud/CRC/response** before testing. If you lose communication, re‑flash a known variant (e.g., 9600/CRC‑Off/Response‑Off) or temporarily switch your host to the flashed settings.
 
@@ -216,6 +216,10 @@ Initial stable release. The entire codebase has been verified to compile cleanly
 ### [0.1.2] - 2025-12-07
 - UART3 error resolved by disabling UART3 definitions in the configuration file (UART3 is not used in DWIN modules).
 - Enhanced register write functions.
+
+### [0.1.3] - 2026-10-28
+- Expanded linker and HEX-to-BIN limits to the full 64 KiB T5L code space.
+- Initialized `PAGESEL` and `D_PAGESEL` before the SDCC runtime, fixing black screens when firmware crosses address `0x8000`.
 
 
 ---

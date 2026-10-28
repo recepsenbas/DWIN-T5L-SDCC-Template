@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-28
+
 ### Fixed
 - Set the HEX-to-BIN conversion buffer to 64 KiB so data at addresses `0x8000` through `0xFFFF` does not hit makebin's default 32 KiB limit. Packed output is preserved.
 - Set the linker code-size limit explicitly to 65536 bytes, matching the conversion buffer and memory report. See [#1](https://github.com/recepsenbas/DWIN-T5L-SDCC-Template/issues/1).
