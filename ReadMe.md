@@ -31,7 +31,7 @@ This video demonstrates SDCC and Make installation on macOS and Windows, project
 ## Features
 - Structured C project with clear separation of **startup**, **libs**, and **app** layers
 - SDCC **large model** configuration with XRAM placed at `0x8000`
-- Startup for T5L with ISR support
+- Startup for T5L with ISR support and early memory-page initialization for the full 64 KiB code space
 - Portable libraries: `uart`, `sys`, `crc16`, `timer`, `rtc`
 - `Makefile` that:
   - auto‑detects SDCC mcs51 include and large‑model lib folders
@@ -180,6 +180,7 @@ Ready‑to‑flash `.bin` files built for common settings. Files are versioned u
 - Use a serial console to validate `uart` output and ISRs.
 - If you rely on `printf`-style logs, ensure stack/heap are sized appropriately in large model.
 - Review `build/dist/output.map` to verify segment placement.
+- If code crosses address `0x8000`, keep the reset-time `PAGESEL = 0x01` initialization in `startup/startup_T5L.s`; without it, the OS CPU cannot execute the upper half of the 64 KiB code space reliably.
 
 ---
 

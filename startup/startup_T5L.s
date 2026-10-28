@@ -30,9 +30,9 @@
 ; -------------------------------------------------------------------
 .area HOME (CODE, ABS)
 
-; Reset vector – set external RAM paging and jump to SDCC init
+; Reset vector – jump to the T5L-specific SFR initialization stub
 .org 0x0000
-    ljmp    __sdcc_gsinit_startup
+    ljmp    __t5l_reset_init
 
 ; External interrupt 0 (unused)
 .org 0x0003
@@ -71,6 +71,15 @@
 ; UART3 interrupt
 .org 0x0083
     ljmp    _uart3_ISR
+
+; T5L OS CPU memory configuration required before the C runtime starts.
+; PAGESEL = 0x01 enables the full 64 KiB code space. D_PAGESEL = 0x02
+; maps MOVX accesses to the 32 KiB data RAM window at 0x8000-0xFFFF.
+.org 0x0086
+__t5l_reset_init:
+    mov     PAGESEL,   #0x01
+    mov     D_PAGESEL, #0x02
+    ljmp    __sdcc_gsinit_startup
 
 ; -------------------------------------------------------------------
 ; Optional memory clearing loops (disabled by default).

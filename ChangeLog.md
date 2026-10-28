@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 - Set the HEX-to-BIN conversion buffer to 64 KiB so data at addresses `0x8000` through `0xFFFF` does not hit makebin's default 32 KiB limit. Packed output is preserved.
 - Set the linker code-size limit explicitly to 65536 bytes, matching the conversion buffer and memory report. See [#1](https://github.com/recepsenbas/DWIN-T5L-SDCC-Template/issues/1).
+- Initialize `PAGESEL` to `0x01` and `D_PAGESEL` to `0x02` in the reset path before the SDCC runtime starts. This enables execution across the full 64 KiB code space and prevents a black screen when firmware grows beyond the `0x8000` boundary. The fix was validated on a DMG10600F101_01WTC panel with a 37 KiB application.
 
 ## [0.1.2] - 2025-12-07
 
